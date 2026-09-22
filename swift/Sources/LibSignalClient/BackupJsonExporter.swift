@@ -82,9 +82,7 @@ public class BackupJsonExporter: NativeHandleOwner<SignalMutPointerBackupJsonExp
     ///
     /// - Throws: ``MessageBackupValidationError`` if whole-backup validation fails.
     public func finishExport() throws {
-        try withNativeHandle { handle in
-            try checkError(signal_backup_json_exporter_finish(handle))
-        }
+        try NativeNice.BackupJsonExporter_Finish(exporter: self)
     }
 }
 

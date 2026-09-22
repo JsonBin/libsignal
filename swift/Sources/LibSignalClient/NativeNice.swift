@@ -5298,6 +5298,20 @@ internal enum NativeNice {
         }
 
     }
+    internal static func BackupJsonExporter_Finish(
+        exporter: BackupJsonExporter,
+    ) throws {
+        try BridgeHandleMutRefConverter<SignalMutPointerBackupJsonExporter, BackupJsonExporter>.convertArgBorrowed(
+            exporter
+        ) { exporterFfi in
+            try checkError(
+                SignalFfi.signal_backup_json_exporter_finish(
+                    exporterFfi,
+                )
+            )
+        }
+
+    }
     internal static func BackupJsonExporter_GetInitialChunk(
         exporter: BackupJsonExporter,
     ) throws -> String {

@@ -181,7 +181,7 @@ fn BackupJsonExporter_ExportFrames(
         .map_err(ReadError::with_error_only)
 }
 
-#[bridge_fn]
+#[bridge_fn(nice_swift = true)]
 fn BackupJsonExporter_Finish(exporter: &mut BackupJsonExporter) -> Result<(), ReadError> {
     exporter.finish().map_err(ReadError::with_error_only)
 }
