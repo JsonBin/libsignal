@@ -308,13 +308,13 @@ impl NiceArgConverter for Vec<u8> {
     }
 }
 
-impl ArgTypeInfoBase for Vec<&'_ [u8]> {
+impl ArgTypeInfoBase for &'_ [&'_ [u8]] {
     type ArgType = BorrowedSliceOf<BorrowedSliceOf<u8>>;
 }
-impl<'a> ArgTypeInfo<'a> for Vec<&'a [u8]> {
+impl<'a> ArgTypeInfo<'a> for &'a [&'a [u8]] {
     type StoredType = Vec<&'a [u8]>;
 
-    fn borrow(foreign: Self::ArgType) -> SignalFfiResult<Self> {
+    fn borrow(foreign: Self::ArgType) -> SignalFfiResult<Self::StoredType> {
         let slices = unsafe { foreign.as_slice()? };
         slices
             .iter()
@@ -335,7 +335,7 @@ impl<'a> ArgTypeInfo<'a> for Vec<&'a [u8]> {
     }
 
     fn load_from(stored: &'a mut Self::StoredType) -> Self {
-        std::mem::take(stored)
+        stored
     }
 }
 
