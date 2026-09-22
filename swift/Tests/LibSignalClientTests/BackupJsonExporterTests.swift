@@ -6,6 +6,8 @@
 import LibSignalClient
 import XCTest
 
+#if !os(iOS) || targetEnvironment(simulator)
+
 class BackupJsonExporterTests: TestCaseBase {
     /// Splits the canonical fixture into its unprefixed BackupInfo and length-prefixed frames.
     private func canonicalChunks() throws -> (backupInfo: Data, frames: [Data]) {
@@ -168,3 +170,5 @@ class BackupJsonExporterTests: TestCaseBase {
         }
     }
 }
+
+#endif
