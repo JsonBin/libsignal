@@ -40,18 +40,25 @@ pub(crate) const CONNECTION_INVALIDATED_CLOSE_CODE: u16 = 4401;
 pub(crate) const CONNECTED_ELSEWHERE_CLOSE_CODE: u16 = 4409;
 
 const DOMAIN_CONFIG_CHAT: DomainConfig = DomainConfig {
-    ip_v4: &[ip_addr!(v4, "76.223.66.180"), ip_addr!(v4, "15.197.251.99")],
+    //ip_v4: &[ip_addr!(v4, "76.223.66.180"), ip_addr!(v4, "15.197.251.99")],
+    ip_v4: &[ip_addr!(v4, "104.21.56.202"), ip_addr!(v4, "172.67.187.219")],
     ip_v6: &[
-        ip_addr!(v6, "2600:9000:a507:ab6d:575d:9d9f:64af:7a5a"),
-        ip_addr!(v6, "2600:9000:a61f:527c:8e4a:4b48:bbfd:c9bb"),
+        //ip_addr!(v6, "2600:9000:a507:ab6d:575d:9d9f:64af:7a5a"),
+        //ip_addr!(v6, "2600:9000:a61f:527c:8e4a:4b48:bbfd:c9bb"),
+        ip_addr!(v6, "2606:4700:3034::6815:38ca"),
+        ip_addr!(v6, "2606:4700:3035::ac43:bbdb"),
     ],
     connect: ConnectionConfig {
         // Keeping the service names in sync makes it so we don't have to carefully track which
         // config we're using.
         service: ServiceName("chat"),
-        hostname: "grpc.chat.signal.org",
+       // hostname: "grpc.chat.signal.org",
+        hostname: "api.rocketsandboxpre.com",
         port: DEFAULT_HTTPS_PORT,
-        cert: SIGNAL_ROOT_CERTIFICATES,
+        //cert: SIGNAL_ROOT_CERTIFICATES,
+        // `api.rocketsandboxpre.com` is served by Cloudflare and uses a publicly-trusted
+        // certificate, so use the system root store instead of Signal's private root.
+        cert: RootCertificates::Native,
         min_tls_version: Some(SslVersion::TLS1_3),
         http_version: Some(HttpVersion::Http2),
         confirmation_header_name: Some(TIMESTAMP_HEADER_NAME),
