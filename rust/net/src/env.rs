@@ -60,7 +60,9 @@ const DOMAIN_CONFIG_CHAT: DomainConfig = DomainConfig {
         // certificate, so use the system root store instead of Signal's private root.
         cert: RootCertificates::Native,
         min_tls_version: Some(SslVersion::TLS1_3),
-        http_version: Some(HttpVersion::Http2),
+        //http_version: Some(HttpVersion::Http2),
+        // Use HTTP/1.1 for WebSocket - many servers don't support HTTP/2 WebSocket upgrade
+        http_version: Some(HttpVersion::Http1_1),
         confirmation_header_name: Some(TIMESTAMP_HEADER_NAME),
         // This won't use H2, but we still want it as a fallback.
         proxy: Some(ConnectionProxyConfig {
